@@ -1,4 +1,4 @@
-FROM node:10 AS builder
+FROM node:16.20.2 AS builder
 WORKDIR /app
 ENV BUILD_PATH './build'
 
