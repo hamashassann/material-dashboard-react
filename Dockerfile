@@ -2,7 +2,7 @@ FROM node:10 AS builder
 WORKDIR /app
 ENV BUILD_PATH './build'
 
-COPY . .
+COPY . . .
 
 RUN \
 	if [ -f yarn.lock ]; then yarn && yarn build; \
