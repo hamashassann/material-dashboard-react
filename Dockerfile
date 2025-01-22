@@ -1,8 +1,6 @@
-FROM node:16-alpine
-
-RUN apk add --no-cache libc6-compat
-
+FROM node:16 AS builder
 WORKDIR /app
+ENV BUILD_PATH './build'
 
 COPY . .
 
@@ -13,5 +11,8 @@ RUN \
     else echo "Lockfile not found." && exit 1; \
     fi
 
-EXPOSE 3000
-CMD npm run start
+FROM nginx:alpine AS prod
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/build .
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
